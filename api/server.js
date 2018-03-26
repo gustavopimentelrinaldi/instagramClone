@@ -80,3 +80,26 @@ app.get('/api/:id', function(req, res){
         });
     });
 });
+
+// PUT by ID (Update)
+app.put('/api/:id', function(req, res){
+    var dados = req.body;
+
+    db.open( function(err, mongoclient){
+        mongoclient.collection('postagens', function(err, collection){
+            collection.update(
+                { _id : objectId(req.params.id) },
+                { $set : { titulo : req.body.titulo } },
+                {},
+                function(err, records){
+                    if(err){
+                        res.json(erro);
+                    } else{
+                        res.json(records);
+                    }
+                    mongoclient.close();
+                }
+            );
+        });
+    });
+});
