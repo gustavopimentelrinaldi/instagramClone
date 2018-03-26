@@ -1,6 +1,7 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     mongodb = require('mongodb');
+    objectId = require('mongodb').ObjectId;
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.get('/', function(req, res){
 
 });
 
+// create (POST)
 app.post('/api', function(req, res){
     var dados = req.body;
 
@@ -32,13 +34,49 @@ app.post('/api', function(req, res){
         mongoclient.collection('postagens', function(err, collection){
             collection.insert(dados, function(err, records){
                 if(err){
-                    res.json({'status' : '0'});
+                    res.json({'status' : 'inclusão falhou!'});
                 } else{
-                    res.json({'status' : '1'});
+                    res.json({'status' : 'inclusão realizada com sucesso!'});
                 }
 
                 mongoclient.close();
             })
         })
     } )
+});
+
+// read (GET)
+app.get('/api', function(req, res){
+    var dados = req.body;
+
+    db.open( function(err, mongoclient){
+        mongoclient.collection('postagens', function(err, collection){
+            collection.find().toArray(function(err, results){
+                if(err){
+                    res.json(err);
+                } else{
+                    res.json(results);
+                }
+                mongoclient.close();
+            });
+        });
+    });
+});
+
+// GET by ID
+app.get('/api/:id', function(req, res){
+    var dados = req.body;
+
+    db.open( function(err, mongoclient){
+        mongoclient.collection('postagens', function(err, collection){
+            collection.find(objectId(req.params.id)).toArray(function(err, results){
+                if(err){
+                    res.json(err);
+                } else{
+                    res.json(results);
+                }
+                mongoclient.close();
+            });
+        });
+    });
 });
