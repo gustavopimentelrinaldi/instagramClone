@@ -73,7 +73,7 @@ app.get('/api/:id', function(req, res){
                 if(err){
                     res.json(err);
                 } else{
-                    res.json(results);
+                    res.status(200).json(results);
                 }
                 mongoclient.close();
             });
