@@ -1,5 +1,6 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
+    multiparty = require('connect-multiparty'),
     mongodb = require('mongodb');
     objectId = require('mongodb').ObjectId;
 
@@ -8,6 +9,7 @@ var app = express();
 //body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(multiparty());
 
 var port = 8080;
 
@@ -28,8 +30,13 @@ app.get('/', function(req, res){
 
 // create (POST)
 app.post('/api', function(req, res){
+
+    res.setHeader("Access-Control-Allow-Origin", "*");
     var dados = req.body;
 
+    res.send(dados);
+
+    /*
     db.open( function(err, mongoclient){
         mongoclient.collection('postagens', function(err, collection){
             collection.insert(dados, function(err, records){
@@ -40,9 +47,10 @@ app.post('/api', function(req, res){
                 }
 
                 mongoclient.close();
-            })
-        })
-    } )
+            });
+        });
+    });
+    */
 });
 
 // read (GET)
