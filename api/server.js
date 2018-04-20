@@ -71,7 +71,8 @@ app.post('/api', function(req, res){
 
 // read (GET)
 app.get('/api', function(req, res){
-    var dados = req.body;
+    
+    res.setHeader("Access-Control-Allow-Origin", "*");
 
     db.open( function(err, mongoclient){
         mongoclient.collection('postagens', function(err, collection){
