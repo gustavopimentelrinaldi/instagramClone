@@ -126,17 +126,22 @@ app.get('/uploads/:imagem', function(req, res){
 
 // PUT by ID (Update)
 app.put('/api/:id', function(req, res){
-    res.send(req.body.comentario);
 
-    /*db.open( function(err, mongoclient){
+    db.open( function(err, mongoclient){
         mongoclient.collection('postagens', function(err, collection){
             collection.update(
                 { _id : objectId(req.params.id) },
-                { $set : { titulo : req.body.titulo } },
+                { $push : {
+                    comentarios : { 
+                        id_comentario : new objectId(),
+                        comentario : req.body.comentario
+                        }   
+                    } 
+                },
                 {},
                 function(err, records){
                     if(err){
-                        res.json(erro);
+                        res.json(err);
                     } else{
                         res.json(records);
                     }
@@ -144,7 +149,7 @@ app.put('/api/:id', function(req, res){
                 }
             );
         });
-    }); */
+    });
 });
 
 // DELETE by ID (remove)
