@@ -42,7 +42,15 @@
 								var id = this.value;
 								var id_input_comentario = 'postagem_' +id;
 								var comentario = $('#'+id_input_comentario).val();
-								alert(comentario);
+								var xhr = new XMLHttpRequest();
+								xhr.open('PUT', 'http://localhost:8080/api/'+id);
+								xhr.setRequestHeader('Content-Type', 'application/json');
+
+								xhr.onload = function(){
+									alert(xhr.responseText);
+								}
+
+								xhr.send(JSON.stringify({comentario : comentario}));
 							});
 						}
 					}
