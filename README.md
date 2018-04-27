@@ -1,5 +1,8 @@
 *Instagram Clone*
-# API Dependencies
+
+** First of all -> make sure you have MongoDB installed and running :) **
+
+## API Dependencies
 
 * "body-parser": "^1.15.2",
 * "connect-multiparty": "^2.1.0",
@@ -18,7 +21,7 @@ nodemon app
 localhost:8080/api
 ```
 
-# Server Dependencies
+## Server Dependencies
 
 * "body-parser": "^1.15.2",
 * "consign": "^0.1.2",
